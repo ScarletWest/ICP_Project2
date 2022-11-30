@@ -17,13 +17,11 @@
 
 #include <iostream>
 #include <string>
+#include "Path.h"
+#include <vector>
 using namespace std;
 
 
-template<typename Base, typename T>
-inline bool instanceof(const T *ptr) {
-    return dynamic_cast<const Base*>(ptr) != nullptr;
-}
 
 /**
  * the node class extends Comparable to enable the sorting of Node objects
@@ -34,9 +32,9 @@ private:
     /**
      * instance variables
      */
-    int state{};
+    string state;
     Node* parent;
-    double pathCost{};
+    double pathCost;
 
 public:
 /**
@@ -48,18 +46,18 @@ public:
  * @param action AirportID
  * @param path_cost distance between the state of the calling Node and this node's state
  */
-    Node(int state, Node parent, double path_cost);
+    Node(string state, Node *parent, double path_cost);
 
 // overloaded constructor
-    Node(int state);
+    Node(string state);
 
-    Node (void);
+    Node ();
 
 /**
  * returns the state of this node object
  * @return this.state
  */
-    int getState() const;
+    string getState() const;
 
 /**
  * returns the parent node of this node object
@@ -85,7 +83,7 @@ public:
  * @param o the node to compare calling node object with
  * @return boolean
  */
-    bool operator== (Node &other) const;
+    bool operator== (Node other) const;
 
 
 /**
@@ -94,7 +92,7 @@ public:
  * initial state to the goal state of a given problem
  * @return Solution
  */
-//    Solution solutionPath();
+    Path path();
 
 ///**
 // * returns an int based on whether a node has a greater, equal or lower

@@ -4,24 +4,24 @@
 
 #include "node.h"
 
-Node::Node(int state, Node parent, double path_cost) {
+Node::Node(string state, Node* parent, double path_cost) {
     this->state = state;
-    this->parent = &parent;
+    this->parent = parent;
     this->pathCost = path_cost;
 }
 
 // overloaded constructor
-Node::Node(int state) {
+Node::Node(string state) {
     this->state = state;
     this->parent = nullptr;
     this->pathCost = 0.0;
 }
 
-Node::Node (void) {
+Node::Node () {
     this->parent = nullptr;
 }
 
-int Node::getState() const {
+string Node::getState() const {
     return state;
 }
 
@@ -37,41 +37,33 @@ string Node::toString() {
     string node;
     if (this->parent != nullptr) {
         node = "Node {";
-        node += "state=" + to_string(state);
-        node += ", parent=" + to_string(parent->getState());
+        node += "state=" + state;
+        node += ", parent=" + parent->getState();
         node += ", path_cost=" + to_string(pathCost) + "}";
     } else {
-        node = "Node { state=" + to_string(state) + "}";
+        node = "Node { state=" + state + "}";
     }
 
     return node;
 }
 
-bool Node::operator== (Node &other) const {
-    return this->state == other.state;
+bool Node::operator== (Node other) const {
+    return this->getState() == other.getState();
 }
 
-//bool Node::equals(Node *n) {
-//    if (n == this) return true;
-//    if (!(instanceof<Node>(n))) {
-//        return false;
-//    }
-//    Node node = *dynamic_cast<Node>(*n);
-//    return this->getState() == node.getState();
-//}
 
-//Solution Node::solutionPath() {
-//    vector<int> stateSequence;
-//    double totalPathCost = this->getPathCost();
-//
-//    stateSequence.insert(stateSequence.begin(), this->getState());
-//    Node *node = this->getParent();
-//
-//    while (node != nullptr) {
-//        stateSequence.insert(stateSequence.begin(), node->getState());
-//        node = node->getParent();
-//
-//    }
-//
-//    return {stateSequence, totalPathCost};
-//}
+Path Node::path() {
+    vector<string> actions;
+    double finalPathCost = this->getPathCost();
+
+    actions.insert(actions.begin(), this->getState());
+    Node *node = this->getParent();
+
+    while (node != nullptr) {
+        actions.insert(actions.begin(), node->getState());
+        node = node->getParent();
+
+    }
+
+    return {actions, finalPathCost};
+}
