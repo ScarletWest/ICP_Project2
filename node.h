@@ -83,7 +83,7 @@ public:
  * @param o the node to compare calling node object with
  * @return boolean
  */
-    bool operator== (Node other) const;
+    bool operator== (const Node &other) const;
 
 
 /**
@@ -103,8 +103,6 @@ public:
 //    int compareTo(Node node) {
 //        return Double.compare(this.getPathCost(), node.getPathCost());
 //    }
-
-    bool equals(Node *n);
 };
 
 

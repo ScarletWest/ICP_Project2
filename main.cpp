@@ -222,55 +222,45 @@
 
 #include "algo.h"
 #include "readFiles.h"
+#include "node.h"
 
 int main() {
     readFiles::readAirportFile();
-    readFiles::readRouteAirline();
+    readFiles::readRouteFile();
 
-    string destination_country, destination_city, source_country, source_city;
+    vector<vector<string>> inputData = readFiles::readInputFile();
 
-    cout<<"Enter the start country: ";
-    getline(cin, source_country);
-
-    cout<<"\nEnter the start city: ";
-    getline(cin,source_city);
-
-    cout<<"\nEnter the Destination country: ";
-    getline(cin,destination_country);
-
-    cout<<"\nEnter the Destination city: ";
-    getline(cin,destination_city);
+    vector<string> sourceCityCountry = inputData[0];
+    vector<string> destinationCityCountry = inputData[1];
 
     vector<string> sourceAirportIds = readFiles::getAirportByCityCountry(
-            source_city, source_country);
+            sourceCityCountry[0], sourceCityCountry[1]);
     vector<string> destinationAirportIds = readFiles::getAirportByCityCountry(
-            destination_city, destination_country);
+            destinationCityCountry[0], destinationCityCountry[1]);
 
-    for (string id : sourceAirportIds) {
-        cout << "Source: " << id << endl;
-    }
-
-    for (string id: destinationAirportIds) {
-        cout << "Destination: " << id << endl;
-    }
-
-//    for (vector<string> vect : readFiles::routeInfo) {
-//        cout << vect[2] << endl;
-//    }
-
-    for (string sourceAirportId: sourceAirportIds) {
-        for (string destinationAirportId: destinationAirportIds) {
-            Path path = algo::breadthFirstSearch(sourceAirportId, destinationAirportId,
+    for (const string& sourceAirportId: sourceAirportIds) {
+        for (const string& destinationAirportId: destinationAirportIds) {
+            algo::breadthFirstSearch(sourceAirportId, destinationAirportId,
                                                  readFiles::routeInfo);
         }
     }
 
-//
-//    vector<string> actionSequence = path.getActionSequence();
-//
-//    for (string action: actionSequence) {
-//        cout << action << endl;
-//    }
+    Path optimalPath = readFiles::validPaths[0];
+
+    for (const Path& path: readFiles::validPaths) {
+        if (path.getPathCost() < optimalPath.getPathCost()) {
+            optimalPath = path;
+        }
+    }
+
+    string data = optimalPath.createString();
+
+    string filename = "accra-winnipeg-output.txt";
+    readFiles::writeOutputFile(filename, data);
+
+//    Path path = Path({"248", "273", "897"}, 2343.34);
+//    string data = path.createString();
+//    readFiles::writeOutputFile(filename, data);
 
     return 0;
 }

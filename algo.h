@@ -14,7 +14,7 @@ using namespace std;
 
 class algo {
 public:
-    static Path breadthFirstSearch(string sourceAirportID, string destinationAirportID, vector<vector<string>> map);
+    static void breadthFirstSearch(string sourceAirportID, string destinationAirportID, vector<vector<string>> map);
 };
 
 

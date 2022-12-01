@@ -5,6 +5,7 @@
 #ifndef ICP_PROJECT2_READFILES_H
 #define ICP_PROJECT2_READFILES_H
 
+#include "Path.h"
 #include <iostream>
 #include <fstream>
 #include <string>
@@ -26,10 +27,14 @@ class readFiles {
 public:
     static vector<vector<string>> airportInfo;
     static vector<vector<string>> routeInfo;
+    static vector<Path> validPaths;
 
     static vector<string> getAirportByCityCountry(const string& city, const string& country);
     static void readAirportFile();
-    static void readRouteAirline();
+    static void readRouteFile();
+    static vector<vector<string>> readInputFile();
+    static void addPath(Path path);
+    static void writeOutputFile(const string& filename, const string& data);
 };
 
 

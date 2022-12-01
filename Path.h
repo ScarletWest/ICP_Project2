@@ -20,6 +20,7 @@ public:
     Path(vector<string> actionSequence, double pathCost);
     vector<string> getActionSequence();
     double getPathCost() const;
+    string createString();
 };
 
 

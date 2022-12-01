@@ -6,6 +6,7 @@
 
 vector<vector<string>> readFiles::airportInfo;
 vector<vector<string>> readFiles::routeInfo;
+vector<Path> readFiles::validPaths;
 
 vector<string> readFiles::getAirportByCityCountry(const string& city, const string& country) {
     vector<string> airportIds;
@@ -36,7 +37,7 @@ void readFiles::readAirportFile(){
         cout<<"Could not open the file\n";
 }
 
-void readFiles::readRouteAirline() {
+void readFiles::readRouteFile() {
     vector <string> row;
     string line, word;
 
@@ -54,4 +55,43 @@ void readFiles::readRouteAirline() {
     } else {
         cout << "Could not open the file\n";
     }
+}
+
+
+vector<vector<string>> readFiles::readInputFile() {
+    vector<vector<string>> rows;
+    vector <string> row;
+    string line, word;
+
+    fstream file("accra-winnipeg.txt");
+    if (file.is_open()) {
+        while (getline(file, line)) {
+            row.clear();
+
+            stringstream str(line);
+
+            while (getline(str, word, ','))
+                row.push_back(word);
+            rows.push_back(row);
+        }
+    } else {
+        cout << "Could not open the file\n";
+    }
+
+    return rows;
+}
+
+void readFiles::addPath(Path path) {
+    validPaths.push_back(path);
+}
+
+void readFiles::writeOutputFile(const string& filename, const string& data) {
+
+        ofstream outputFile(filename);
+        if (outputFile.fail()) {
+            cout << "Could not open " << filename << " for writing!" << endl;
+        }
+
+        outputFile << data;
+        outputFile.close();
 }

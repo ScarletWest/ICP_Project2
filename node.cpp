@@ -25,7 +25,7 @@ string Node::getState() const {
     return state;
 }
 
-Node * Node::getParent() {
+Node* Node::getParent() {
     return parent;
 }
 
@@ -47,12 +47,13 @@ string Node::toString() {
     return node;
 }
 
-bool Node::operator== (Node other) const {
+bool Node::operator== (const Node &other) const {
     return this->getState() == other.getState();
 }
 
 
 Path Node::path() {
+    cout << "path called" << endl;
     vector<string> actions;
     double finalPathCost = this->getPathCost();
 
@@ -60,10 +61,11 @@ Path Node::path() {
     Node *node = this->getParent();
 
     while (node != nullptr) {
+        cout << node->getState() << endl;
         actions.insert(actions.begin(), node->getState());
         node = node->getParent();
-
     }
 
+    cout << "done with path";
     return {actions, finalPathCost};
 }
