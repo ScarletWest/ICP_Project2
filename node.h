@@ -11,7 +11,7 @@
  * operations include constructor and accessor methods,
  * compareTo, equals, and solutionPath methods
  *
- * @author Richard Quayson
+ * @author Akosua Debrah & Nana Yaa Owusu
  */
 
 
