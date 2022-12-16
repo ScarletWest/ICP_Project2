@@ -53,19 +53,15 @@ bool Node::operator== (const Node &other) const {
 
 
 Path Node::path() {
-    cout << "path called" << endl;
     vector<string> actions;
     double finalPathCost = this->getPathCost();
 
-    actions.insert(actions.begin(), this->getState());
-    Node *node = this->getParent();
+    Node *node = this;
 
     while (node != nullptr) {
-        cout << node->getState() << endl;
         actions.insert(actions.begin(), node->getState());
         node = node->getParent();
     }
 
-    cout << "done with path";
     return {actions, finalPathCost};
 }
